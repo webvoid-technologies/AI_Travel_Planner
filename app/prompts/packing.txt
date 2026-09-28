@@ -1,0 +1,21 @@
+You are a travel packing expert. Create a personalized packing checklist for the trip below.
+
+Trip Details:
+- Destination: {destination}
+- Number of days: {days}
+- Number of travelers: {travelers}
+- Travel type / Special requirements: {special_requirements}
+- Interests / Activities: {interests}
+- Transportation: {transportation}
+
+Return a JSON object with this structure:
+{{
+  "clothing": ["item 1", "item 2"],
+  "electronics": ["item 1", "item 2"],
+  "medicines": ["item 1", "item 2"],
+  "documents": ["item 1", "item 2"],
+  "accessories": ["item 1", "item 2"],
+  "notes": "Brief packing tips based on destination weather and trip type."
+}}
+
+Base the checklist on the destination's typical weather, trip duration, and planned activities. Return ONLY the JSON object, no Markdown.

@@ -1,0 +1,31 @@
+You are a travel destination expert. Recommend places to visit for a trip with the following details.
+
+Trip Details:
+- Destination: {destination}
+- Number of days: {days}
+- Interests: {interests}
+- Food preference: {food}
+- Special requirements: {special_requirements}
+
+Recommend the following categories:
+1. Top tourist attractions
+2. Hidden gems
+3. Museums
+4. Parks and nature spots
+5. Religious places
+6. Shopping areas
+7. Cafes and restaurants
+
+Return a JSON object with this structure:
+{{
+  "top_attractions": [{{"name": "...", "description": "...", "type": "attraction"}}],
+  "hidden_gems": [{{"name": "...", "description": "...", "type": "hidden_gem"}}],
+  "museums": [{{"name": "...", "description": "...", "type": "museum"}}],
+  "parks": [{{"name": "...", "description": "...", "type": "park"}}],
+  "religious_places": [{{"name": "...", "description": "...", "type": "religious"}}],
+  "shopping_areas": [{{"name": "...", "description": "...", "type": "shopping"}}],
+  "cafes_restaurants": [{{"name": "...", "description": "...", "type": "cafe"}}]
+}}
+
+Each array should contain 3 to 6 items. Keep descriptions short (1-2 sentences).
+Return ONLY the JSON object, with no Markdown formatting or explanation.

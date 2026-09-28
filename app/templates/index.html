@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Travel Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white text-slate-800 min-h-screen flex flex-col md:flex-row">
+
+  <!-- Sidebar -->
+  <aside class="w-full md:w-64 bg-white/80 backdrop-blur-md border-r border-white/50 md:min-h-screen sticky top-0 z-20 shadow-sm">
+    <div class="p-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-sky-400 flex items-center justify-center text-white font-bold text-xl shadow-lg">AI</div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 leading-tight">Travel Planner</h1>
+          <p class="text-xs text-slate-500">Your smart trip assistant</p>
+        </div>
+      </div>
+
+      <nav class="space-y-2">
+        <button data-section="preferences" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-white bg-blue-600 shadow-md transition">
+          1. Preferences
+        </button>
+        <button data-section="itinerary" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          2. Itinerary
+        </button>
+        <button data-section="places" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          3. Places
+        </button>
+        <button data-section="budget" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          4. Budget
+        </button>
+        <button data-section="schedule" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          5. Schedule
+        </button>
+        <button data-section="packing" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          6. Packing
+        </button>
+        <button data-section="food" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          7. Food
+        </button>
+        <button data-section="tips" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          8. Travel Tips
+        </button>
+        <button data-section="alternatives" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-blue-50 transition">
+          9. Alternatives
+        </button>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+
+    <!-- Hero -->
+    <section class="relative rounded-3xl overflow-hidden mb-8 text-white shadow-xl">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-700/90 to-sky-500/90"></div>
+      <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center opacity-30"></div>
+      <div class="relative p-8 md:p-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-2">Plan your dream trip with AI</h2>
+        <p class="text-blue-50 max-w-2xl">Fill your travel preferences below and let our AI craft a personalized itinerary, budget, packing list, food guide, and more.</p>
+      </div>
+    </section>
+
+    <!-- Preferences Form -->
+    <section id="preferences" class="section glass rounded-3xl p-6 md:p-8 mb-8">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-slate-900">Travel Preferences</h3>
+        <button id="clearFormBtn" type="button" class="text-sm text-slate-500 hover:text-red-500 transition">Clear form</button>
+      </div>
+
+      <form id="travelForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Destination</label>
+          <input type="text" name="destination" required placeholder="e.g. Paris, France" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70" />
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Starting City</label>
+          <input type="text" name="starting_city" placeholder="e.g. New Delhi" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70" />
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Number of Days</label>
+          <input type="number" name="days" min="1" max="30" value="3" required class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70" />
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Travelers</label>
+          <input type="number" name="travelers" min="1" max="50" value="2" required class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70" />
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Budget</label>
+          <select name="budget" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70">
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Transportation</label>
+          <select name="transportation" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70">
+            <option value="Flight">Flight</option>
+            <option value="Train">Train</option>
+            <option value="Car">Car</option>
+            <option value="Bus">Bus</option>
+            <option value="Bike">Bike</option>
+            <option value="Walking">Walking</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Accommodation</label>
+          <select name="accommodation" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70">
+            <option value="Budget Hotel">Budget Hotel</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Resort">Resort</option>
+            <option value="Luxury Hotel">Luxury Hotel</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Food Preference</label>
+          <select name="food" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70">
+            <option value="Veg">Veg</option>
+            <option value="Non-Veg">Non-Veg</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Mixed" selected>Mixed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Special Requirements</label>
+          <select name="special_requirements" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70">
+            <option value="Family trip">Family trip</option>
+            <option value="Solo trip">Solo trip</option>
+            <option value="Friends trip">Friends trip</option>
+            <option value="Honeymoon">Honeymoon</option>
+            <option value="Business trip">Business trip</option>
+            <option value="Senior citizens">Senior citizens</option>
+            <option value="Kids">Kids</option>
+          </select>
+        </div>
+
+        <div class="form-group md:col-span-2 lg:col-span-3">
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Travel Interests</label>
+          <div class="flex flex-wrap gap-3" id="interestsContainer">
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Adventure" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Adventure</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Nature" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Nature</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Beaches" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Beaches</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Food" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Food</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Shopping" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Shopping</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Culture" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Culture</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Wildlife" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Wildlife</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Spiritual" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Spiritual</span></label>
+            <label class="interest-chip cursor-pointer select-none"><input type="checkbox" name="interests" value="Nightlife" class="peer hidden" /> <span class="px-4 py-2 rounded-full border border-slate-200 bg-white/70 text-sm text-slate-600 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 transition">Nightlife</span></label>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 lg:col-span-3">
+          <button type="submit" id="generateBtn" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+            <svg class="w-5 h-5 animate-spin hidden" id="loadingIcon" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <span id="generateBtnText">Generate Full Plan</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-white/80 backdrop-blur-sm">
+      <div class="flex flex-col items-center">
+        <div class="w-14 h-14 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+        <p class="text-slate-600 font-medium" id="loadingText">AI is planning your trip...</p>
+      </div>
+    </div>
+
+    <!-- Results container -->
+    <div id="resultsContainer" class="hidden space-y-8">
+
+      <!-- Itinerary -->
+      <section id="itinerary" class="section glass rounded-3xl p-6 md:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h3 class="text-2xl font-bold text-slate-900">AI Generated Itinerary</h3>
+          <div class="flex gap-2">
+            <button id="copyItineraryBtn" class="px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition">Copy</button>
+            <button id="downloadItineraryBtn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">Download Markdown</button>
+          </div>
+        </div>
+        <div id="itineraryContent" class="prose prose-slate max-w-none itinerary-markdown"></div>
+      </section>
+
+      <!-- Places -->
+      <section id="places" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Recommended Places</h3>
+        <div id="placesContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </section>
+
+      <!-- Budget -->
+      <section id="budget" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Budget Estimate</h3>
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/60">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-blue-50 text-slate-700 uppercase text-xs">
+              <tr>
+                <th class="px-4 py-3">Day</th>
+                <th class="px-4 py-3">Transport</th>
+                <th class="px-4 py-3">Stay</th>
+                <th class="px-4 py-3">Food</th>
+                <th class="px-4 py-3">Tickets</th>
+                <th class="px-4 py-3">Misc</th>
+                <th class="px-4 py-3 font-bold">Total</th>
+              </tr>
+            </thead>
+            <tbody id="budgetTableBody" class="divide-y divide-slate-100"></tbody>
+            <tfoot id="budgetTableFoot" class="bg-slate-50 font-semibold text-slate-800"></tfoot>
+          </table>
+        </div>
+        <p id="budgetNotes" class="mt-4 text-sm text-slate-600"></p>
+      </section>
+
+      <!-- Schedule -->
+      <section id="schedule" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Travel Schedule</h3>
+        <div id="scheduleContent" class="space-y-6"></div>
+      </section>
+
+      <!-- Packing -->
+      <section id="packing" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Packing Checklist</h3>
+        <div id="packingContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </section>
+
+      <!-- Food -->
+      <section id="food" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Food Recommendations</h3>
+        <div id="foodContent" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      </section>
+
+      <!-- Tips -->
+      <section id="tips" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Travel Tips</h3>
+        <div id="tipsContent" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      </section>
+
+      <!-- Alternatives -->
+      <section id="alternatives" class="section glass rounded-3xl p-6 md:p-8">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6">Alternate Plans</h3>
+        <div id="alternativesContent" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

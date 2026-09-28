@@ -1,0 +1,28 @@
+You are an expert AI travel planner. Create a personalized, day-by-day travel itinerary using the details below.
+
+Trip Details:
+- Destination: {destination}
+- Starting city: {starting_city}
+- Number of days: {days}
+- Number of travelers: {travelers}
+- Budget: {budget}
+- Transportation preference: {transportation}
+- Accommodation preference: {accommodation}
+- Food preference: {food}
+- Interests: {interests}
+- Special requirements: {special_requirements}
+
+Requirements:
+1. Provide a short, engaging trip overview (2-3 sentences).
+2. For each day, include:
+   - Day title (e.g., "Day 1: Arrival & City Exploration").
+   - Morning activity with a brief description.
+   - Afternoon activity with a brief description.
+   - Evening activity with a brief description.
+   - Night recommendation.
+   - Estimated travel time between places.
+   - Suggested transportation mode.
+   - Estimated daily budget in local/INR or USD.
+3. Add a short section with important travel notes and tips.
+
+Return the response as Markdown. Use clear headings, bullet points, and a timeline feel.

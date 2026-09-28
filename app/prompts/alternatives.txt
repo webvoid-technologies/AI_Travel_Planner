@@ -1,0 +1,39 @@
+You are an adaptive travel planner. Generate alternate travel plans for the trip below.
+
+Trip Details:
+- Destination: {destination}
+- Number of days: {days}
+- Number of travelers: {travelers}
+- Budget: {budget}
+- Interests: {interests}
+- Transportation preference: {transportation}
+- Accommodation preference: {accommodation}
+- Food preference: {food}
+- Special requirements: {special_requirements}
+
+Return a JSON object with this structure:
+{{
+  "rainy_day_plan": {{
+    "title": "...",
+    "activities": ["activity 1", "activity 2"],
+    "notes": "..."
+  }},
+  "budget_friendly": {{
+    "title": "...",
+    "activities": ["activity 1", "activity 2"],
+    "estimated_savings": "...",
+    "notes": "..."
+  }},
+  "luxury_alternative": {{
+    "title": "...",
+    "activities": ["activity 1", "activity 2"],
+    "notes": "..."
+  }},
+  "family_friendly": {{
+    "title": "...",
+    "activities": ["activity 1", "activity 2"],
+    "notes": "..."
+  }}
+}}
+
+Each alternative should be practical and tailored to the selected trip details. Return ONLY the JSON object, no Markdown.

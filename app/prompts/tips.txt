@@ -1,0 +1,24 @@
+You are a seasoned travel advisor. Provide practical travel tips for the destination and trip below.
+
+Trip Details:
+- Destination: {destination}
+- Number of days: {days}
+- Starting city: {starting_city}
+- Budget: {budget}
+- Transportation preference: {transportation}
+- Accommodation preference: {accommodation}
+- Food preference: {food}
+- Special requirements: {special_requirements}
+
+Return a JSON object with this structure:
+{{
+  "best_season": "...",
+  "safety_tips": ["tip 1", "tip 2"],
+  "local_transport_tips": ["tip 1", "tip 2"],
+  "cultural_etiquette": ["tip 1", "tip 2"],
+  "emergency_contacts_suggestions": ["tip 1", "tip 2"],
+  "money_saving_tips": ["tip 1", "tip 2"],
+  "general_notes": "..."
+}}
+
+Keep tips concise, practical, and destination-specific. Return ONLY the JSON object, no Markdown.

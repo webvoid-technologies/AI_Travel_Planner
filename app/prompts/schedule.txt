@@ -1,0 +1,39 @@
+You are a travel logistics expert. Build a travel schedule for the trip below.
+
+Trip Details:
+- Destination: {destination}
+- Starting city: {starting_city}
+- Number of days: {days}
+- Number of travelers: {travelers}
+- Transportation preference: {transportation}
+- Interests: {interests}
+- Special requirements: {special_requirements}
+
+Return a JSON object with this structure:
+{{
+  "departure": {{
+    "from": "starting city",
+    "to": "destination",
+    "suggested_mode": "Flight/Train/Bus/Car",
+    "estimated_departure": "suggested time",
+    "estimated_arrival": "suggested time",
+    "notes": "..."
+  }},
+  "arrival": {{
+    "to": "destination",
+    "estimated_arrival": "suggested time",
+    "first_activity": "...",
+    "notes": "..."
+  }},
+  "daily_schedule": [
+    {{
+      "day": 1,
+      "local_travel_timings": "e.g., 9:00 AM - 6:00 PM",
+      "visit_order": ["Place 1", "Place 2", "Place 3"],
+      "best_times": "e.g., Morning: Place 1, Afternoon: Place 2",
+      "notes": "..."
+    }}
+  ]
+}}
+
+Ensure the schedule is realistic and considers local travel timings and the selected interests. Return ONLY the JSON object, no Markdown.
